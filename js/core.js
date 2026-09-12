@@ -163,18 +163,6 @@ function game() {
     console.log(`📊 Score → You: ${playerScore} | AI: ${computerScore}`);
   }
 
-  // Wipe the noisy round-by-round log before the grand finale.
-  console.clear();
-
-  alert(
-    '🏁 GAME FINISHED!\n\n' +
-      'The war is over. The fate of humanity has been decided.\n' +
-      '📢 Check the console to see who won!\n\n' +
-      '🔄 Refresh the page to play again.\n\n' +
-      'Click OK to close this message.',
-  );
-
-  // Fresh console for the reveal.
   if (playerScore === 3) {
     displayBox(
       'HUMANITY WINS!',
@@ -186,6 +174,14 @@ function game() {
   }
 
   displaySummary(roundHistory, playerScore, computerScore);
+
+  alert(
+    '🏁 GAME FINISHED!\n\n' +
+      'The war is over. The fate of humanity has been decided.\n' +
+      '📢 The winner and final score are now shown in the console.\n\n' +
+      '🔄 Refresh the page to play again.\n\n' +
+      'Click OK to close this message.',
+  );
 }
 
 // Start the game when the page loads.

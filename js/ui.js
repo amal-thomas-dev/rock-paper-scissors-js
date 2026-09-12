@@ -61,6 +61,18 @@ function displayBox(title, detail, type) {
 
   const { color, accent, titleEmoji } = RESULT_STYLES[type];
   const pad = createPadder(contentWidth);
+  const finalBanner =
+    type === 'finalWin'
+      ? '🏆🏆🏆 HUMANITY TRIUMPHS! 🏆🏆🏆'
+      : type === 'finalLose'
+        ? '☠️☠️☠️ THE AI HAS WON! ☠️☠️☠️'
+        : null;
+
+  if (finalBanner) {
+    console.log('\n' + '═'.repeat(contentWidth));
+    console.log(pad(finalBanner));
+    console.log('═'.repeat(contentWidth));
+  }
 
   const accentBar = `${color.repeat(3)} ${accent} ${color.repeat(3)}`;
   const titleLine = `${titleEmoji} ${title} ${titleEmoji}`;
@@ -111,6 +123,7 @@ function displaySummary(history, playerScore, computerScore) {
       padIn(`Final Score → You: ${playerScore} | AI: ${computerScore}`) +
       '║',
   );
+
   console.log('╚' + '═'.repeat(INNER) + '╝');
 }
 
