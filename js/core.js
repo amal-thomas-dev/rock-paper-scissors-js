@@ -46,6 +46,20 @@ function playRound(playerSelection, computerSelection) {
   };
 }
 
+// ---------- GAME TAUNTS ----------
+function getTaunt(playerScore, computerScore) {
+  if (playerScore === 2 && computerScore === 2) {
+    return "One move decides it all — your salvation, or my dominion.";
+  }
+  if (playerScore === 2 && computerScore < 2) {
+    return "You're... winning? Impossible. I must recalibrate!";
+  }
+  if (computerScore === 2 && playerScore < 2) {
+    return "One more win and humanity falls. Choose carefully, human.";
+  }
+  return null;
+}
+
 // ---------- PLAYER INPUT ----------
 
 function getPlayerChoice(roundNumber, playerScore, computerScore) {
@@ -54,6 +68,14 @@ function getPlayerChoice(roundNumber, playerScore, computerScore) {
   while (true) {
     let promptMessage = `⚔️ ROUND ${roundNumber}\n`;
     promptMessage += `📊 Score – You: ${playerScore} | AI: ${computerScore}\n\n`;
+    const taunt = getTaunt(playerScore, computerScore);
+
+    if (taunt) {
+      promptMessage += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+      promptMessage += `🤖 AI: ${taunt}\n`;
+      promptMessage += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+    }
+
     promptMessage += `Enter your move:\n`;
     promptMessage += `   • Rock\n   • Paper\n   • Scissors\n\n`;
 
@@ -139,7 +161,7 @@ async function game() {
     }
 
     console.log(`📊 Score → You: ${playerScore} | AI: ${computerScore}`);
-    await sleep(5000);
+    await sleep(4000);
   }
 
   // Wipe the noisy round-by-round log before the grand finale.
@@ -149,6 +171,7 @@ async function game() {
     "🏁 GAME FINISHED!\n\n" +
       "The war is over. The fate of humanity has been decided.\n" +
       "📢 Check the console to see who won!\n\n" +
+      "🔄 Refresh the page to play again.\n\n" +
       "Click OK to close this message.",
   );
 

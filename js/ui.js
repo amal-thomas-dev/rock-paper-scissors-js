@@ -58,7 +58,7 @@ async function startCountdown(isFirstRound, roundNumber) {
     await sleep(500);
   } else {
     console.log(`🔄 Round ${roundNumber} starting...`);
-    await sleep(1000);
+    await sleep(2000);
   }
 }
 
