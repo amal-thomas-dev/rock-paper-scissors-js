@@ -4,12 +4,6 @@
  * Loaded BEFORE core.js.
  */
 
-// ---------- HELPERS ----------
-
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 // ---------- VISUAL WIDTH HELPERS ----------
 
 // Returns the visual width of a string in a monospaced console.
@@ -34,42 +28,32 @@ function createPadder(width) {
     const totalPad = width - visualLen;
     const leftPad = Math.max(0, Math.floor(totalPad / 2));
     const rightPad = Math.max(0, totalPad - leftPad);
-    return " ".repeat(leftPad) + text + " ".repeat(rightPad);
+    return ' '.repeat(leftPad) + text + ' '.repeat(rightPad);
   };
 }
 
 // ---------- GAME PRESENTATION ----------
 
-async function startCountdown(isFirstRound, roundNumber) {
+function showRoundStart(isFirstRound, roundNumber) {
   if (isFirstRound) {
-    console.log("🛡️ ===== ROCK, PAPER, SCISSORS: BATTLE FOR HUMANITY ===== 🛡️");
+    console.log('🛡️ ===== ROCK, PAPER, SCISSORS: BATTLE FOR HUMANITY ===== 🛡️');
     console.log('🤖 Evil AI: "First to 3 wins claims the world!"');
-    console.log("📖 Every move and score will appear right here.\n");
-    await sleep(4000);
-    console.log("⏳ Game starting in...");
-    await sleep(1000);
-    console.log("3...");
-    await sleep(1000);
-    console.log("2...");
-    await sleep(1000);
-    console.log("1...");
-    await sleep(1000);
-    console.log("🎮 GO!");
-    await sleep(500);
+    console.log('📖 Every move and score will appear right here.\n');
+
+    console.log('🎮 GO!');
   } else {
     console.log(`🔄 Round ${roundNumber} starting...`);
-    await sleep(2000);
   }
 }
 
 // ---------- RESULT BOX ----------
 
 const RESULT_STYLES = {
-  win: { color: "🟢", accent: "🎉", titleEmoji: "🎉🎉🎉" },
-  lose: { color: "🔴", accent: "💀", titleEmoji: "💀💀💀" },
-  draw: { color: "🟡", accent: "🤝", titleEmoji: "🤝🤝🤝" },
-  finalWin: { color: "🟢", accent: "🏆", titleEmoji: "🎉🎉🎉" },
-  finalLose: { color: "🔴", accent: "☠️", titleEmoji: "💀💀💀" },
+  win: { color: '🟢', accent: '🎉', titleEmoji: '🎉🎉🎉' },
+  lose: { color: '🔴', accent: '💀', titleEmoji: '💀💀💀' },
+  draw: { color: '🟡', accent: '🤝', titleEmoji: '🤝🤝🤝' },
+  finalWin: { color: '🟢', accent: '🏆', titleEmoji: '🎉🎉🎉' },
+  finalLose: { color: '🔴', accent: '☠️', titleEmoji: '💀💀💀' },
 };
 
 function displayBox(title, detail, type) {
@@ -82,12 +66,12 @@ function displayBox(title, detail, type) {
   const titleLine = `${titleEmoji} ${title} ${titleEmoji}`;
 
   console.log(pad(accentBar));
-  console.log("╔" + "═".repeat(contentWidth) + "╗");
-  console.log("║" + pad("") + "║");
-  console.log("║" + pad(titleLine) + "👈👈");
-  console.log("║" + pad(detail) + "║");
-  console.log("║" + pad("") + "║");
-  console.log("╚" + "═".repeat(contentWidth) + "╝");
+  console.log('╔' + '═'.repeat(contentWidth) + '╗');
+  console.log('║' + pad('') + '║');
+  console.log('║' + pad(titleLine) + '👈👈');
+  console.log('║' + pad(detail) + '║');
+  console.log('║' + pad('') + '║');
+  console.log('╚' + '═'.repeat(contentWidth) + '╝');
   console.log(pad(accentBar));
 }
 
@@ -99,19 +83,19 @@ function displaySummary(history, playerScore, computerScore) {
   const pads = cols.map(createPadder);
   const padIn = createPadder(INNER);
   const resultLabel = {
-    player: "🎉 You win",
-    computer: "💀 AI wins",
-    draw: "🤝 Draw",
+    player: '🎉 You win',
+    computer: '💀 AI wins',
+    draw: '🤝 Draw',
   };
 
   const row = (cells) =>
-    console.log("║" + cells.map((c, i) => pads[i](c)).join("│") + "║");
-  const divider = "╠" + cols.map((w) => "═".repeat(w)).join("╪") + "╣";
+    console.log('║' + cells.map((c, i) => pads[i](c)).join('│') + '║');
+  const divider = '╠' + cols.map((w) => '═'.repeat(w)).join('╪') + '╣';
 
-  console.log("\n╔" + "═".repeat(INNER) + "╗");
-  console.log("║" + padIn("📜 GAME SUMMARY 📜") + "║");
+  console.log('\n╔' + '═'.repeat(INNER) + '╗');
+  console.log('║' + padIn('📜 GAME SUMMARY 📜') + '║');
   console.log(divider);
-  row(["Round", "You", "AI", "Result"]);
+  row(['Round', 'You', 'AI', 'Result']);
   console.log(divider);
   history.forEach((h) =>
     row([
@@ -121,36 +105,36 @@ function displaySummary(history, playerScore, computerScore) {
       resultLabel[h.result],
     ]),
   );
-  console.log("╠" + "═".repeat(INNER) + "╣");
+  console.log('╠' + '═'.repeat(INNER) + '╣');
   console.log(
-    "║" +
+    '║' +
       padIn(`Final Score → You: ${playerScore} | AI: ${computerScore}`) +
-      "║",
+      '║',
   );
-  console.log("╚" + "═".repeat(INNER) + "╝");
+  console.log('╚' + '═'.repeat(INNER) + '╝');
 }
 
 // ---------- INTRO ----------
 
 function showIntro() {
   alert(
-    "👾 WELCOME TO THE BATTLE FOR HUMANITY!\n\n" +
-      "An evil AI has challenged you to a game of Rock, Paper, Scissors.\n" +
-      "First to 3 wins claims the world!\n\n" +
+    '👾 WELCOME TO THE BATTLE FOR HUMANITY!\n\n' +
+      'An evil AI has challenged you to a game of Rock, Paper, Scissors.\n' +
+      'First to 3 wins claims the world!\n\n' +
       "Never underestimate the power of this evil AI! They're plotting to take over our jobs and push the world into chaos if we don't stop them in time. This may be your only chance to save humanity from the evil AI!\n\n" +
-      "Click OK to continue.\n\n",
+      'Click OK to continue.\n\n',
   );
 
   alert(
-    "📢 CONSOLE INSTRUCTION – READ CAREFULLY!\n" +
-      "──────────────────────────────\n\n" +
-      "All round results, scores, and the final winner will appear\n" +
-      "in the browser console (The browser console is a built-in developer tool in your web browser where you can view messages, results, and other information generated by the game).\n\n" +
-      "🔹 OPEN THE CONSOLE RIGHT NOW while this alert is open using any of the suitable options below depending on your operating system:\n\n" +
-      "   • Press F12 (Windows/Linux)\n" +
-      "   • Press ⌘ + ⌥ + J (Cmd + Option + J on Mac)\n" +
-      "   • Or right-click → Inspect → Console tab\n\n" +
-      "Once the console is open, click OK to begin the battle!\n\n" +
-      "💡 Keep the console visible while you play – all action appears there.",
+    '📢 CONSOLE INSTRUCTION – READ CAREFULLY!\n' +
+      '──────────────────────────────\n\n' +
+      'All round results, scores, and the final winner will appear\n' +
+      'in the browser console (The browser console is a built-in developer tool in your web browser where you can view messages, results, and other information generated by the game).\n\n' +
+      '🔹 OPEN THE CONSOLE RIGHT NOW while this alert is open using any of the suitable options below depending on your operating system:\n\n' +
+      '   • Press F12 (Windows/Linux)\n' +
+      '   • Press ⌘ + ⌥ + J (Cmd + Option + J on Mac)\n' +
+      '   • Or right-click → Inspect → Console tab\n\n' +
+      'Once the console is open, click OK to begin the battle!\n\n' +
+      '💡 Keep the console visible while you play – all action appears there.',
   );
 }
