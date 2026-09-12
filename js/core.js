@@ -4,13 +4,13 @@
  * Relies on UI functions from ui.js (loaded first).
  */
 
-const VALID_CHOICES = ["Rock", "Paper", "Scissors"];
+const VALID_CHOICES = ['Rock', 'Paper', 'Scissors'];
 const VALID_CHOICES_LOWER = VALID_CHOICES.map((choice) => choice.toLowerCase());
 
 const WIN_CONDITIONS = {
-  Rock: "Scissors",
-  Paper: "Rock",
-  Scissors: "Paper",
+  Rock: 'Scissors',
+  Paper: 'Rock',
+  Scissors: 'Paper',
 };
 
 // ---------- COMPUTER LOGIC ----------
@@ -25,23 +25,23 @@ function computerPlay() {
 function playRound(playerSelection, computerSelection) {
   if (playerSelection === computerSelection) {
     return {
-      result: "draw",
-      title: "DRAW!",
+      result: 'draw',
+      title: 'DRAW!',
       detail: `Both chose ${playerSelection}.`,
     };
   }
 
   if (WIN_CONDITIONS[playerSelection] === computerSelection) {
     return {
-      result: "player",
-      title: "YOU WIN!",
+      result: 'player',
+      title: 'YOU WIN!',
       detail: `${playerSelection} beats ${computerSelection}.`,
     };
   }
 
   return {
-    result: "computer",
-    title: "YOU LOSE!",
+    result: 'computer',
+    title: 'YOU LOSE!',
     detail: `${computerSelection} beats ${playerSelection}.`,
   };
 }
@@ -49,13 +49,13 @@ function playRound(playerSelection, computerSelection) {
 // ---------- GAME TAUNTS ----------
 function getTaunt(playerScore, computerScore) {
   if (playerScore === 2 && computerScore === 2) {
-    return "One move decides it all — your salvation, or my dominion.";
+    return 'One move decides it all — your salvation, or my dominion.';
   }
   if (playerScore === 2 && computerScore < 2) {
     return "You're... winning? Impossible. I must recalibrate!";
   }
   if (computerScore === 2 && playerScore < 2) {
-    return "One more win and humanity falls. Choose carefully, human.";
+    return 'One more win and humanity falls. Choose carefully, human.';
   }
   return null;
 }
@@ -63,7 +63,7 @@ function getTaunt(playerScore, computerScore) {
 // ---------- PLAYER INPUT ----------
 
 function getPlayerChoice(roundNumber, playerScore, computerScore) {
-  let errorHint = "";
+  let errorHint = '';
 
   while (true) {
     let promptMessage = `⚔️ ROUND ${roundNumber}\n`;
@@ -81,7 +81,7 @@ function getPlayerChoice(roundNumber, playerScore, computerScore) {
 
     if (errorHint) {
       promptMessage += `⚠️ ${errorHint}\n\n`;
-      errorHint = "";
+      errorHint = '';
     }
 
     promptMessage += `(Type your choice and press OK. Press Cancel to quit.)`;
@@ -108,7 +108,7 @@ function getPlayerChoice(roundNumber, playerScore, computerScore) {
 
 // ---------- MAIN GAME ----------
 
-async function game() {
+function game() {
   showIntro();
 
   let playerScore = 0;
@@ -119,7 +119,7 @@ async function game() {
   while (playerScore < 3 && computerScore < 3) {
     roundNumber++;
 
-    await startCountdown(roundNumber === 1, roundNumber);
+    showRoundStart(roundNumber === 1, roundNumber);
 
     console.log(`\n--- ROUND ${roundNumber} ---`);
 
@@ -129,9 +129,9 @@ async function game() {
       computerScore,
     );
     if (playerChoice === null) {
-      console.log("🚪 GAME ABORTED: You cancelled. The AI is disappointed.");
+      console.log('🚪 GAME ABORTED: You cancelled. The AI is disappointed.');
       alert(
-        "😅 You quit! Humanity survives another day. Refresh to try again.",
+        '😅 You quit! Humanity survives another day. Refresh to try again.',
       );
       return;
     }
@@ -150,43 +150,38 @@ async function game() {
       result: roundResult.result,
     });
 
-    if (roundResult.result === "player") {
+    if (roundResult.result === 'player') {
       playerScore++;
-      displayBox(roundResult.title, roundResult.detail, "win");
-    } else if (roundResult.result === "computer") {
+      displayBox(roundResult.title, roundResult.detail, 'win');
+    } else if (roundResult.result === 'computer') {
       computerScore++;
-      displayBox(roundResult.title, roundResult.detail, "lose");
+      displayBox(roundResult.title, roundResult.detail, 'lose');
     } else {
-      displayBox(roundResult.title, roundResult.detail, "draw");
+      displayBox(roundResult.title, roundResult.detail, 'draw');
     }
 
     console.log(`📊 Score → You: ${playerScore} | AI: ${computerScore}`);
-    await sleep(4000);
   }
 
-  // Wipe the noisy round-by-round log before the grand finale.
-  console.clear();
-
-  alert(
-    "🏁 GAME FINISHED!\n\n" +
-      "The war is over. The fate of humanity has been decided.\n" +
-      "📢 Check the console to see who won!\n\n" +
-      "🔄 Refresh the page to play again.\n\n" +
-      "Click OK to close this message.",
-  );
-
-  // Fresh console for the reveal.
   if (playerScore === 3) {
     displayBox(
-      "HUMANITY WINS!",
-      "You saved the world from the evil AI!",
-      "finalWin",
+      'HUMANITY WINS!',
+      'You saved the world from the evil AI!',
+      'finalWin',
     );
   } else {
-    displayBox("AI TAKES OVER!", "Better luck next time, human.", "finalLose");
+    displayBox('AI TAKES OVER!', 'Better luck next time, human.', 'finalLose');
   }
 
   displaySummary(roundHistory, playerScore, computerScore);
+
+  alert(
+    '🏁 GAME FINISHED!\n\n' +
+      'The war is over. The fate of humanity has been decided.\n' +
+      '📢 The winner and final score are now shown in the console.\n\n' +
+      '🔄 Refresh the page to play again.\n\n' +
+      'Click OK to close this message.',
+  );
 }
 
 // Start the game when the page loads.
