@@ -80,7 +80,7 @@ function displayBox(title, detail, type) {
   console.log(pad(accentBar));
   console.log('╔' + '═'.repeat(contentWidth) + '╗');
   console.log('║' + pad('') + '║');
-  console.log('║' + pad(titleLine) + '👈👈');
+  console.log('║' + pad(titleLine) + '║');
   console.log('║' + pad(detail) + '║');
   console.log('║' + pad('') + '║');
   console.log('╚' + '═'.repeat(contentWidth) + '╝');
